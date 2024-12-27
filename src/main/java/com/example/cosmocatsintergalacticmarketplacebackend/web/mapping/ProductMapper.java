@@ -1,23 +1,32 @@
-package com.example.cosmocatsintergalacticmarketplacebackend.service.mapping;
+package com.example.cosmocatsintergalacticmarketplacebackend.web.mapping;
 
 import com.example.cosmocatsintergalacticmarketplacebackend.domain.Product;
 import com.example.cosmocatsintergalacticmarketplacebackend.domain.enums.RarityLevel;
 import com.example.cosmocatsintergalacticmarketplacebackend.dto.product.ProductRequest;
+import com.example.cosmocatsintergalacticmarketplacebackend.dto.product.ProductResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface ProductMapper {
-    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
-
-    @Mapping(target = "id", expression = "java(UUID.randomUUID())")
     @Mapping(target = "rarityLevel", source = "rarityLevel", qualifiedByName = "mapRarityLevel")
     Product toProduct(ProductRequest productRequest);
+
+    @Mapping(target = "rarityLevel", source = "rarityLevel", qualifiedByName = "rarityLevelToString")
+    ProductResponse toResponse(Product product);
+
+    List<ProductResponse> toResponseList(List<Product> products);
 
     @Named("mapRarityLevel")
     default RarityLevel mapRarityLevel(String rarityLevel) {
         return RarityLevel.valueOf(rarityLevel.toUpperCase());
+    }
+
+    @Named("rarityLevelToString")
+    default String rarityLevelToString(RarityLevel rarityLevel) {
+        return rarityLevel != null ? rarityLevel.name() : null;
     }
 }

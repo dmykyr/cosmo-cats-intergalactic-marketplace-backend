@@ -1,4 +1,4 @@
-package com.example.cosmocatsintergalacticmarketplacebackend.dto;
+package com.example.cosmocatsintergalacticmarketplacebackend.dto.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class CategoryRequest {
+public class CategoryResponse {
     private UUID id;
     private String name;
     private String description;
