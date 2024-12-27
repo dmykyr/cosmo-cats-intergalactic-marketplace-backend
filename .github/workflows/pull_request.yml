@@ -49,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-coverage-report
-          path: build/reports/coverage/index.html
+          path: build/reports/tests/test/index.html
