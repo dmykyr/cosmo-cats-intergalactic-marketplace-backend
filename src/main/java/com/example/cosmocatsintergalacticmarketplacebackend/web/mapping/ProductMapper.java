@@ -12,10 +12,13 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "rarityLevel", source = "rarityLevel", qualifiedByName = "mapRarityLevel")
+    @Mapping(target = "isInStock", source = "inStock")
     Product toProduct(ProductRequest productRequest);
 
     @Mapping(target = "rarityLevel", source = "rarityLevel", qualifiedByName = "rarityLevelToString")
+    @Mapping(target = "isInStock", source = "inStock")
     ProductResponse toResponse(Product product);
 
     List<ProductResponse> toResponseList(List<Product> products);

@@ -32,5 +32,6 @@ public class ProductRequest {
     @ValidRarityLevel
     private String rarityLevel;
 
+    @NotNull(message = "In stock status is mandatory")
     private boolean isInStock;
 }
