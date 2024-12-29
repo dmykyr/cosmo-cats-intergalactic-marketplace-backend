@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class FeatureToggleService {
 
-    @Value("${feature.cosmoCats.enabled}")
-    private boolean cosmoCatsEnabled;
+    @Value("${feature.addProduct.enabled:false}")
+    private boolean addProductEnabled;
 
-    @Value("${feature.kittyProducts.enabled}")
-    private boolean kittyProductsEnabled;
+    @Value("${feature.getSpecificProduct.enabled:false}")
+    private boolean getSpecificProductEnabled;
 
 }

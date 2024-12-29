@@ -3,6 +3,8 @@ package com.example.cosmocatsintergalacticmarketplacebackend.web;
 import com.example.cosmocatsintergalacticmarketplacebackend.domain.Product;
 import com.example.cosmocatsintergalacticmarketplacebackend.dto.product.ProductRequest;
 import com.example.cosmocatsintergalacticmarketplacebackend.dto.product.ProductResponse;
+import com.example.cosmocatsintergalacticmarketplacebackend.featuretoggle.FeatureToggles;
+import com.example.cosmocatsintergalacticmarketplacebackend.featuretoggle.annotation.FeatureToggle;
 import com.example.cosmocatsintergalacticmarketplacebackend.service.interfaces.IProductService;
 import com.example.cosmocatsintergalacticmarketplacebackend.web.mapping.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class ProductController {
         return ResponseEntity.ok(productMapper.toResponseList(productService.getAllProducts()));
     }
 
+    @FeatureToggle(FeatureToggles.GET_SPECIFIC_PRODUCT)
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable UUID id) {
         return productService.getProductById(id)
@@ -32,6 +35,7 @@ public class ProductController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @FeatureToggle(FeatureToggles.ADD_PRODUCT)
     @PostMapping
     public Product createProduct(@RequestBody ProductRequest productDto) {
         return productService.createProduct(productMapper.toProduct(productDto));
