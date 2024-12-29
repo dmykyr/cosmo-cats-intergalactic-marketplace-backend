@@ -7,6 +7,7 @@ import com.example.cosmocatsintergalacticmarketplacebackend.featuretoggle.Featur
 import com.example.cosmocatsintergalacticmarketplacebackend.featuretoggle.annotation.FeatureToggle;
 import com.example.cosmocatsintergalacticmarketplacebackend.service.interfaces.IProductService;
 import com.example.cosmocatsintergalacticmarketplacebackend.web.mapping.ProductMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,8 @@ public class ProductController {
     }
 
     @FeatureToggle(FeatureToggles.ADD_PRODUCT)
-    @PostMapping
-    public Product createProduct(@RequestBody ProductRequest productDto) {
+    @PostMapping()
+    public Product createProduct(@RequestBody @Valid ProductRequest productDto) {
         return productService.createProduct(productMapper.toProduct(productDto));
     }
 

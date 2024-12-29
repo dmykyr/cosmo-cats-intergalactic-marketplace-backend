@@ -28,7 +28,7 @@ public class ProductRequest {
     @Size(max = 255, message = "Planet origin name max length is 255 characters")
     private String planetOrigin;
 
-    @NotBlank(message = "Rarity level is mandatory")
+    @NotNull(message = "Rarity level is mandatory")
     @ValidRarityLevel
     private String rarityLevel;
 
