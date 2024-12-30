@@ -3,8 +3,11 @@ package com.example.cosmocatsintergalacticmarketplacebackend.web;
 import com.example.cosmocatsintergalacticmarketplacebackend.domain.Product;
 import com.example.cosmocatsintergalacticmarketplacebackend.dto.product.ProductRequest;
 import com.example.cosmocatsintergalacticmarketplacebackend.dto.product.ProductResponse;
+import com.example.cosmocatsintergalacticmarketplacebackend.featuretoggle.FeatureToggles;
+import com.example.cosmocatsintergalacticmarketplacebackend.featuretoggle.annotation.FeatureToggle;
 import com.example.cosmocatsintergalacticmarketplacebackend.service.interfaces.IProductService;
 import com.example.cosmocatsintergalacticmarketplacebackend.web.mapping.ProductMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,7 @@ public class ProductController {
         return ResponseEntity.ok(productMapper.toResponseList(productService.getAllProducts()));
     }
 
+    @FeatureToggle(FeatureToggles.GET_SPECIFIC_PRODUCT)
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable UUID id) {
         return productService.getProductById(id)
@@ -32,8 +36,9 @@ public class ProductController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Product createProduct(@RequestBody ProductRequest productDto) {
+    @FeatureToggle(FeatureToggles.ADD_PRODUCT)
+    @PostMapping()
+    public Product createProduct(@RequestBody @Valid ProductRequest productDto) {
         return productService.createProduct(productMapper.toProduct(productDto));
     }
 
