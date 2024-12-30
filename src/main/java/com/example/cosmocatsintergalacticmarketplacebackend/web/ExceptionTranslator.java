@@ -15,8 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 import static java.net.URI.create;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ProblemDetail.forStatusAndDetail;
 
 @ControllerAdvice
@@ -26,7 +25,7 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     @ExceptionHandler(FeatureNotAvailableException.class)
     ProblemDetail handleFeatureToggleNotEnabledException(FeatureNotAvailableException ex) {
         log.info("Feature is not enabled");
-        ProblemDetail problemDetail = forStatusAndDetail(NOT_FOUND, ex.getMessage());
+        ProblemDetail problemDetail = forStatusAndDetail(FORBIDDEN, ex.getMessage());
         problemDetail.setType(create("feature-disabled"));
         problemDetail.setTitle("Feature is disabled");
         return problemDetail;
